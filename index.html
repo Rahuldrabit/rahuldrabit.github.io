@@ -1,0 +1,1130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Rahul Drabit Chowdhury — AI Engineer & Researcher</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet" />
+<style>
+  /* ─── TOKENS ───────────────────────────────────────────────────── */
+  :root {
+    --bg:        #050810;
+    --surface:   #0c1120;
+    --border:    rgba(0,255,200,0.12);
+    --accent:    #00ffc8;
+    --accent2:   #7b5ea7;
+    --accent3:   #ff6b6b;
+    --text:      #e8eaf0;
+    --muted:     #7b8099;
+    --heading:   'Syne', sans-serif;
+    --mono:      'Space Mono', monospace;
+    --body:      'DM Sans', sans-serif;
+    --glow:      0 0 40px rgba(0,255,200,0.18);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; font-size: 16px; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--body);
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* ─── NOISE OVERLAY ─────────────────────────────────────────────── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.4;
+  }
+
+  /* ─── GRID BACKDROP ─────────────────────────────────────────────── */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(0,255,200,0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,255,200,0.025) 1px, transparent 1px);
+    background-size: 60px 60px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ─── SCROLLBAR ──────────────────────────────────────────────────── */
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 2px; }
+
+  /* ─── NAV ────────────────────────────────────────────────────────── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.1rem 4rem;
+    background: rgba(5,8,16,0.85);
+    backdrop-filter: blur(18px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo {
+    font-family: var(--mono);
+    font-size: 0.85rem;
+    color: var(--accent);
+    letter-spacing: 0.08em;
+    text-decoration: none;
+  }
+  .nav-links { display: flex; gap: 2.2rem; list-style: none; }
+  .nav-links a {
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--accent); }
+
+  /* ─── HERO ───────────────────────────────────────────────────────── */
+  #hero {
+    position: relative;
+    z-index: 1;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 8rem 4rem 6rem;
+    overflow: hidden;
+  }
+
+  .hero-orb {
+    position: absolute;
+    width: 700px; height: 700px;
+    background: radial-gradient(circle, rgba(0,255,200,0.08) 0%, transparent 70%);
+    top: -200px; right: -200px;
+    border-radius: 50%;
+    pointer-events: none;
+    animation: pulse 8s ease-in-out infinite;
+  }
+  .hero-orb2 {
+    position: absolute;
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(123,94,167,0.1) 0%, transparent 70%);
+    bottom: 0; left: -100px;
+    border-radius: 50%;
+    pointer-events: none;
+    animation: pulse 10s ease-in-out infinite reverse;
+  }
+
+  @keyframes pulse {
+    0%, 100% { transform: scale(1) translate(0,0); opacity: 1; }
+    50% { transform: scale(1.08) translate(10px, -10px); opacity: 0.7; }
+  }
+
+  .hero-tag {
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    color: var(--accent);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.2s forwards;
+  }
+  .hero-tag::before {
+    content: '';
+    display: inline-block;
+    width: 30px; height: 1px;
+    background: var(--accent);
+  }
+
+  h1 {
+    font-family: var(--heading);
+    font-size: clamp(3.5rem, 8vw, 7rem);
+    font-weight: 800;
+    line-height: 0.95;
+    letter-spacing: -0.02em;
+    margin-bottom: 1.8rem;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.4s forwards;
+  }
+  h1 .line-accent { color: var(--accent); display: block; }
+  h1 .line-dim { color: var(--muted); font-weight: 400; }
+
+  .hero-desc {
+    max-width: 560px;
+    font-size: 1.05rem;
+    color: var(--muted);
+    line-height: 1.75;
+    margin-bottom: 2.5rem;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.6s forwards;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.8s forwards;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.8rem;
+    font-family: var(--mono);
+    font-size: 0.8rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border-radius: 2px;
+    transition: all 0.25s;
+    cursor: pointer;
+  }
+  .btn-primary {
+    background: var(--accent);
+    color: var(--bg);
+    font-weight: 700;
+    box-shadow: 0 0 30px rgba(0,255,200,0.3);
+  }
+  .btn-primary:hover { box-shadow: 0 0 50px rgba(0,255,200,0.55); transform: translateY(-2px); }
+  .btn-ghost {
+    border: 1px solid var(--border);
+    color: var(--text);
+    background: transparent;
+  }
+  .btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
+
+  .hero-stats {
+    position: absolute;
+    bottom: 4rem; right: 4rem;
+    display: flex;
+    gap: 3rem;
+    opacity: 0;
+    animation: fadeUp 0.8s 1s forwards;
+  }
+  .stat-item { text-align: right; }
+  .stat-num {
+    font-family: var(--heading);
+    font-size: 2.4rem;
+    font-weight: 800;
+    color: var(--accent);
+    line-height: 1;
+  }
+  .stat-label {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-top: 0.25rem;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ─── SECTION COMMONS ────────────────────────────────────────────── */
+  section {
+    position: relative;
+    z-index: 1;
+    padding: 7rem 4rem;
+  }
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    gap: 1.2rem;
+    margin-bottom: 4rem;
+  }
+  .section-num {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    color: var(--accent);
+    letter-spacing: 0.15em;
+  }
+  h2 {
+    font-family: var(--heading);
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--text);
+  }
+  .section-line {
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+    margin-left: 1rem;
+  }
+
+  /* ─── ABOUT ──────────────────────────────────────────────────────── */
+  #about { background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    align-items: start;
+  }
+  .about-text p {
+    color: var(--muted);
+    margin-bottom: 1.2rem;
+    font-size: 1.02rem;
+    line-height: 1.8;
+  }
+  .about-text p strong { color: var(--text); font-weight: 500; }
+
+  .about-links { display: flex; flex-wrap: wrap; gap: 0.7rem; margin-top: 2rem; }
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.4rem 0.9rem;
+    background: transparent;
+    border: 1px solid var(--border);
+    border-radius: 1px;
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: all 0.2s;
+  }
+  .chip:hover { border-color: var(--accent); color: var(--accent); }
+
+  .about-edu {}
+  .edu-item {
+    padding: 1.5rem;
+    border: 1px solid var(--border);
+    margin-bottom: 1.2rem;
+    position: relative;
+    transition: border-color 0.2s;
+  }
+  .edu-item:hover { border-color: rgba(0,255,200,0.35); }
+  .edu-item::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 3px; height: 100%;
+    background: var(--accent);
+  }
+  .edu-degree {
+    font-family: var(--heading);
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 0.25rem;
+  }
+  .edu-school {
+    font-size: 0.85rem;
+    color: var(--accent);
+    margin-bottom: 0.2rem;
+  }
+  .edu-meta {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    color: var(--muted);
+    letter-spacing: 0.05em;
+  }
+
+  /* ─── EXPERIENCE ─────────────────────────────────────────────────── */
+  .exp-timeline { position: relative; }
+  .exp-timeline::before {
+    content: '';
+    position: absolute;
+    top: 0; bottom: 0; left: 0;
+    width: 1px;
+    background: linear-gradient(to bottom, var(--accent), transparent);
+  }
+
+  .exp-item {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 3rem;
+    padding: 2.5rem 0 2.5rem 2.5rem;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+  }
+  .exp-item::before {
+    content: '';
+    position: absolute;
+    top: 2.9rem; left: -4px;
+    width: 9px; height: 9px;
+    background: var(--accent);
+    border-radius: 50%;
+    box-shadow: 0 0 12px var(--accent);
+  }
+  .exp-meta {}
+  .exp-period {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+    margin-bottom: 0.4rem;
+  }
+  .exp-location {
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    color: var(--muted);
+    letter-spacing: 0.05em;
+  }
+  .exp-content {}
+  .exp-role {
+    font-family: var(--heading);
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 0.2rem;
+  }
+  .exp-company {
+    font-size: 0.88rem;
+    color: var(--accent);
+    margin-bottom: 0.8rem;
+  }
+  .exp-desc {
+    font-size: 0.9rem;
+    color: var(--muted);
+    line-height: 1.7;
+  }
+  .exp-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.8rem; }
+  .tag {
+    padding: 0.2rem 0.6rem;
+    background: rgba(0,255,200,0.06);
+    border: 1px solid rgba(0,255,200,0.15);
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    color: var(--accent);
+    letter-spacing: 0.08em;
+  }
+
+  /* ─── SKILLS ─────────────────────────────────────────────────────── */
+  #skills { background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+  .skill-card {
+    padding: 2rem;
+    border: 1px solid var(--border);
+    transition: all 0.25s;
+    position: relative;
+    overflow: hidden;
+  }
+  .skill-card::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent), transparent);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s;
+  }
+  .skill-card:hover { border-color: rgba(0,255,200,0.3); }
+  .skill-card:hover::after { transform: scaleX(1); }
+
+  .skill-card-title {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.18em;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 1.2rem;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+  .skill-card-title svg { opacity: 0.8; }
+  .skill-pills { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .pill {
+    padding: 0.3rem 0.7rem;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.07);
+    font-size: 0.78rem;
+    color: var(--text);
+    transition: all 0.2s;
+  }
+  .pill:hover { background: rgba(0,255,200,0.07); border-color: var(--accent); color: var(--accent); }
+
+  /* ─── RESEARCH ───────────────────────────────────────────────────── */
+  .research-list { display: flex; flex-direction: column; gap: 1rem; }
+  .research-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.5rem;
+    padding: 1.5rem 2rem;
+    border: 1px solid var(--border);
+    transition: all 0.25s;
+  }
+  .research-item:hover { border-color: rgba(0,255,200,0.3); background: rgba(0,255,200,0.02); }
+  .research-dot {
+    width: 8px; height: 8px;
+    background: var(--accent);
+    border-radius: 50%;
+    margin-top: 0.55rem;
+    flex-shrink: 0;
+    box-shadow: 0 0 10px var(--accent);
+    animation: blink 2s ease-in-out infinite;
+  }
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+  .research-text {
+    font-size: 0.93rem;
+    color: var(--text);
+    line-height: 1.6;
+  }
+  .research-status {
+    margin-left: auto;
+    flex-shrink: 0;
+    font-family: var(--mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.12em;
+    color: var(--accent);
+    text-transform: uppercase;
+    padding: 0.2rem 0.6rem;
+    border: 1px solid rgba(0,255,200,0.2);
+    align-self: flex-start;
+  }
+
+  /* ─── OPEN SOURCE ────────────────────────────────────────────────── */
+  #opensource { background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+
+  .oss-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.2rem;
+  }
+  .oss-card {
+    padding: 1.8rem;
+    border: 1px solid var(--border);
+    transition: all 0.25s;
+    text-decoration: none;
+    display: block;
+    position: relative;
+    overflow: hidden;
+  }
+  .oss-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(0,255,200,0.04), transparent);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .oss-card:hover { border-color: rgba(0,255,200,0.35); }
+  .oss-card:hover::before { opacity: 1; }
+  .oss-repo {
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    color: var(--accent);
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .oss-pr {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    color: var(--muted);
+    margin-bottom: 0.8rem;
+  }
+  .oss-desc {
+    font-size: 0.85rem;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  /* ─── ACHIEVEMENTS ───────────────────────────────────────────────── */
+  .ach-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+  .ach-card {
+    padding: 2rem;
+    border: 1px solid var(--border);
+    text-align: center;
+    transition: all 0.25s;
+    position: relative;
+  }
+  .ach-card:hover { border-color: rgba(0,255,200,0.35); transform: translateY(-4px); }
+  .ach-rank {
+    font-family: var(--heading);
+    font-size: 3.5rem;
+    font-weight: 800;
+    color: transparent;
+    -webkit-text-stroke: 1px var(--accent);
+    line-height: 1;
+    margin-bottom: 0.8rem;
+  }
+  .ach-title {
+    font-size: 0.88rem;
+    color: var(--text);
+    line-height: 1.5;
+    margin-bottom: 0.5rem;
+  }
+  .ach-date {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+  }
+
+  /* ─── CONTACT ────────────────────────────────────────────────────── */
+  #contact { text-align: center; padding: 8rem 4rem; }
+  .contact-big {
+    font-family: var(--heading);
+    font-size: clamp(3rem, 6vw, 5.5rem);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    margin-bottom: 1.5rem;
+    line-height: 1;
+  }
+  .contact-big span { color: var(--accent); }
+  .contact-sub {
+    color: var(--muted);
+    font-size: 1rem;
+    margin-bottom: 2.5rem;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .contact-links { display: flex; justify-content: center; flex-wrap: wrap; gap: 1rem; }
+
+  /* ─── FOOTER ─────────────────────────────────────────────────────── */
+  footer {
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    padding: 2rem 4rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+  }
+  footer p {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    color: var(--muted);
+    letter-spacing: 0.05em;
+  }
+  footer span { color: var(--accent); }
+
+  /* ─── PAPER SECTION ──────────────────────────────────────────────── */
+  .paper-card {
+    padding: 2.5rem;
+    border: 1px solid var(--border);
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 2rem;
+    align-items: center;
+    transition: all 0.25s;
+  }
+  .paper-card:hover { border-color: rgba(0,255,200,0.35); }
+  .paper-title {
+    font-family: var(--heading);
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 0.5rem;
+  }
+  .paper-venue {
+    font-size: 0.85rem;
+    color: var(--accent);
+    margin-bottom: 0.3rem;
+  }
+  .paper-meta {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    color: var(--muted);
+  }
+  .paper-badge {
+    padding: 0.4rem 0.9rem;
+    border: 1px solid rgba(123,94,167,0.4);
+    background: rgba(123,94,167,0.08);
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    color: #b39ddb;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  /* ─── RESPONSIVE ─────────────────────────────────────────────────── */
+  @media (max-width: 900px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { gap: 1.2rem; }
+    section { padding: 5rem 1.5rem; }
+    #hero { padding: 7rem 1.5rem 5rem; }
+    .about-grid, .skills-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+    .oss-grid, .ach-grid { grid-template-columns: 1fr; }
+    .exp-item { grid-template-columns: 1fr; gap: 0.5rem; padding-left: 1.8rem; }
+    .hero-stats { position: static; margin-top: 3rem; flex-wrap: wrap; gap: 1.5rem; }
+    .stat-item { text-align: left; }
+    h1 { font-size: 3.2rem; }
+    .paper-card { grid-template-columns: 1fr; }
+    footer { flex-direction: column; gap: 0.5rem; text-align: center; }
+  }
+
+  /* ─── SCROLL REVEAL ──────────────────────────────────────────────── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">RDC.dev</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#experience">Work</a></li>
+    <li><a href="#research">Research</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#opensource">Open Source</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-orb"></div>
+  <div class="hero-orb2"></div>
+
+  <p class="hero-tag">Available for research collaborations</p>
+
+  <h1>
+    <span class="line-dim">Rahul Drabit</span>
+    <span class="line-accent">Chowdhury</span>
+  </h1>
+
+  <p class="hero-desc">
+    AI Engineer &amp; Researcher at BUET. Building at the intersection of
+    <strong style="color:var(--text)">evolutionary algorithms</strong>,
+    <strong style="color:var(--text)">computer vision</strong>, and
+    <strong style="color:var(--text)">generative AI</strong>.
+    Google Summer of Code 2025 contributor.
+  </p>
+
+  <div class="hero-actions">
+    <a href="mailto:rahuldrabit@gmail.com" class="btn btn-primary">
+      <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,12 2,6"/></svg>
+      Get In Touch
+    </a>
+    <a href="https://github.com/rahuldrabit" target="_blank" class="btn btn-ghost">
+      <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+      GitHub
+    </a>
+    <a href="https://linkedin.com/in/rahuldrabit" target="_blank" class="btn btn-ghost">LinkedIn</a>
+  </div>
+
+  <div class="hero-stats">
+    <div class="stat-item">
+      <div class="stat-num">5+</div>
+      <div class="stat-label">OSS PRs Merged</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">7+</div>
+      <div class="stat-label">Research Projects</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">200+</div>
+      <div class="stat-label">Students Trained</div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-header reveal">
+    <span class="section-num">01</span>
+    <h2>About</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="about-grid">
+    <div class="about-text reveal">
+      <p>
+        I'm a <strong>Master's student in Computer Science at BUET</strong>, working at the frontier of
+        artificial intelligence. My work spans evolutionary algorithms, deep learning, and generative AI,
+        with a focus on solving real-world scientific and engineering problems.
+      </p>
+      <p>
+        As a <strong>Google Summer of Code 2025 contributor</strong> with MBDyn, I implemented a
+        Genetic Algorithm module in C++ for evolutionary optimization. Previously, I worked as an
+        <strong>AI Engineer Intern at Technyx</strong>, building computer vision and GenAI pipelines.
+      </p>
+      <p>
+        I believe in open science — I contribute to major projects like OpenVINO, Keras, and AIOpsLab,
+        and co-founded a digital training centre that taught 200+ students during the COVID-19 pandemic.
+      </p>
+      <div class="about-links">
+        <a href="https://leetcode.com/rahuldrabit" class="chip" target="_blank">⌁ LeetCode</a>
+        <a href="https://github.com/rahuldrabit" class="chip" target="_blank">⌁ GitHub</a>
+        <a href="https://linkedin.com/in/rahuldrabit" class="chip" target="_blank">⌁ LinkedIn</a>
+        <a href="https://huggingface.co/rahuldrabit" class="chip" target="_blank">⌁ HuggingFace</a>
+        <a href="https://kaggle.com/rahuldrabit" class="chip" target="_blank">⌁ Kaggle</a>
+      </div>
+    </div>
+
+    <div class="about-edu reveal">
+      <div class="edu-item">
+        <div class="edu-degree">M.Sc. Computer Science &amp; Engineering</div>
+        <div class="edu-school">Bangladesh University of Engineering &amp; Technology (BUET)</div>
+        <div class="edu-meta">Dhaka, Bangladesh &nbsp;·&nbsp; 2024 – 2026</div>
+      </div>
+      <div class="edu-item">
+        <div class="edu-degree">B.Sc. Mathematics</div>
+        <div class="edu-school">Mawlana Bhashani Science &amp; Technology University</div>
+        <div class="edu-meta">Tangail, Bangladesh &nbsp;·&nbsp; 2018 – 2023 &nbsp;·&nbsp; CGPA 3.26/4.00</div>
+      </div>
+      <div class="edu-item" style="--accent:#7b5ea7;">
+        <div class="edu-degree" style="color:var(--muted); font-weight:400;">PGD, Information &amp; Communication Technology</div>
+        <div class="edu-school" style="color:#b39ddb;">Bangladesh University of Engineering &amp; Technology</div>
+        <div class="edu-meta">Dhaka, Bangladesh &nbsp;·&nbsp; 2023 – 2024</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="section-header reveal">
+    <span class="section-num">02</span>
+    <h2>Experience</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="exp-timeline">
+    <div class="exp-item reveal">
+      <div class="exp-meta">
+        <div class="exp-period">Jun – Aug 2025</div>
+        <div class="exp-location">Remote</div>
+      </div>
+      <div class="exp-content">
+        <div class="exp-role">Google Summer of Code 2025 Contributor</div>
+        <div class="exp-company">MBDyn · Genetic Algorithm Module</div>
+        <p class="exp-desc">Designed and implemented a Genetic Algorithm module for evolutionary optimization within the MBDyn multibody dynamics framework. Contributed production-grade C++ code integrating evolutionary algorithm strategies.</p>
+        <div class="exp-tags">
+          <span class="tag">C++</span>
+          <span class="tag">Evolutionary Algorithm</span>
+          <span class="tag">Genetic Algorithm</span>
+          <span class="tag">Open Source</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="exp-item reveal">
+      <div class="exp-meta">
+        <div class="exp-period">Dec 2024 – Apr 2025</div>
+        <div class="exp-location">Dhaka, Bangladesh</div>
+      </div>
+      <div class="exp-content">
+        <div class="exp-role">AI Engineer Intern</div>
+        <div class="exp-company">Technyx</div>
+        <p class="exp-desc">Developed AI/ML pipelines for computer vision and generative AI applications. Worked with modern deep learning stacks for real-world product deployments, spanning data science workflows and production-ready model serving.</p>
+        <div class="exp-tags">
+          <span class="tag">Computer Vision</span>
+          <span class="tag">Gen AI</span>
+          <span class="tag">Python</span>
+          <span class="tag">Data Science</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="exp-item reveal">
+      <div class="exp-meta">
+        <div class="exp-period">Nov 2020 – Jan 2022</div>
+        <div class="exp-location">Cox's Bazar, Bangladesh</div>
+      </div>
+      <div class="exp-content">
+        <div class="exp-role">Co-founder &amp; Trainer</div>
+        <div class="exp-company">Digital Computer Training Centre</div>
+        <p class="exp-desc">Co-founded and operated a digital training centre during the COVID-19 pandemic, providing free and low-cost instruction in MS Office, Photoshop, and Illustrator to over 200 students from the local community.</p>
+        <div class="exp-tags">
+          <span class="tag">Teaching</span>
+          <span class="tag">Adobe Suite</span>
+          <span class="tag">MS Office</span>
+          <span class="tag">Community Impact</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RESEARCH -->
+<section id="research" style="background:var(--surface); border-top:1px solid var(--border); border-bottom:1px solid var(--border);">
+  <div class="section-header reveal">
+    <span class="section-num">03</span>
+    <h2>Research</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="research-list">
+    <div class="research-item reveal">
+      <div class="research-dot"></div>
+      <div class="research-text">DNA Binding Protein Prediction — comparing ML and DL frameworks for bioinformatics classification tasks</div>
+      <span class="research-status">Ongoing</span>
+    </div>
+    <div class="research-item reveal">
+      <div class="research-dot"></div>
+      <div class="research-text">Knowledge Graph Reasoning for time-related data using Graph Neural Networks</div>
+      <span class="research-status">Ongoing</span>
+    </div>
+    <div class="research-item reveal">
+      <div class="research-dot"></div>
+      <div class="research-text">Fuzzy-Based Automated Genetic Algorithm Optimization on HPO of Physics-Informed Neural Networks (PINN)</div>
+      <span class="research-status">Ongoing</span>
+    </div>
+    <div class="research-item reveal">
+      <div class="research-dot"></div>
+      <div class="research-text">Unified Deep Learning Approaches — Fusion-based UNET for medical image segmentation</div>
+      <span class="research-status">Ongoing</span>
+    </div>
+    <div class="research-item reveal">
+      <div class="research-dot"></div>
+      <div class="research-text">Autonomous Site Relativity Engineering using Reinforcement-Enabled LLM-based Multiagent System</div>
+      <span class="research-status">Ongoing</span>
+    </div>
+    <div class="research-item reveal">
+      <div class="research-dot"></div>
+      <div class="research-text">Protein-Protein Interaction Site Prediction using deep learning approaches</div>
+      <span class="research-status">Ongoing</span>
+    </div>
+    <div class="research-item reveal">
+      <div class="research-dot"></div>
+      <div class="research-text">Distributed System for Federated Learning — privacy-preserving decentralized model training</div>
+      <span class="research-status">Ongoing</span>
+    </div>
+  </div>
+
+  <!-- Conference Paper -->
+  <div style="margin-top: 4rem;">
+    <h3 style="font-family:var(--heading); font-size:1.2rem; color:var(--muted); margin-bottom:1.5rem; letter-spacing:0.05em;">Conference Paper</h3>
+    <div class="paper-card reveal">
+      <div>
+        <div class="paper-title">Microcontroller-Based High-Speed and Secured Data Communication System for National Defense using LASER</div>
+        <div class="paper-venue">National Conference on Physics – 2023</div>
+        <div class="paper-meta">Jahangirnagar University, Savar, Dhaka &nbsp;·&nbsp; Bangladesh Physical Society &nbsp;·&nbsp; 9–11 March 2023</div>
+      </div>
+      <span class="paper-badge">Poster Presentation</span>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="section-header reveal">
+    <span class="section-num">04</span>
+    <h2>Skills</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="skills-grid">
+    <div class="skill-card reveal">
+      <div class="skill-card-title">
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+        Research Areas
+      </div>
+      <div class="skill-pills">
+        <span class="pill">Computer Vision</span>
+        <span class="pill">Generative AI</span>
+        <span class="pill">Evolutionary Algorithms</span>
+        <span class="pill">Machine Learning</span>
+        <span class="pill">Quantum Computing</span>
+        <span class="pill">Bioinformatics</span>
+      </div>
+    </div>
+
+    <div class="skill-card reveal">
+      <div class="skill-card-title">
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 9h6M9 12h6M9 15h4"/></svg>
+        Frameworks &amp; Tools
+      </div>
+      <div class="skill-pills">
+        <span class="pill">PyTorch</span>
+        <span class="pill">TensorFlow</span>
+        <span class="pill">FastAPI</span>
+        <span class="pill">Django</span>
+        <span class="pill">LangChain</span>
+        <span class="pill">LangGraph</span>
+        <span class="pill">CrewAI</span>
+        <span class="pill">Qiskit</span>
+        <span class="pill">Docker</span>
+      </div>
+    </div>
+
+    <div class="skill-card reveal">
+      <div class="skill-card-title">
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+        Languages
+      </div>
+      <div class="skill-pills">
+        <span class="pill">Python</span>
+        <span class="pill">C++</span>
+        <span class="pill">C</span>
+        <span class="pill">Rust</span>
+        <span class="pill">Java</span>
+        <span class="pill">JavaScript</span>
+        <span class="pill">SQL</span>
+        <span class="pill">MATLAB</span>
+        <span class="pill">Fortran</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- OPEN SOURCE -->
+<section id="opensource">
+  <div class="section-header reveal">
+    <span class="section-num">05</span>
+    <h2>Open Source</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="oss-grid">
+    <a href="https://github.com/openvinotoolkit/openvino/pull/32554" target="_blank" class="oss-card reveal">
+      <div class="oss-repo">
+        <svg width="12" height="12" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+        openvinotoolkit/openvino
+      </div>
+      <div class="oss-pr">PR #32554</div>
+      <div class="oss-desc">Implemented translator for PyTorch's cross_entropy_loss operation in OpenVINO's PyTorch frontend (log_softmax + NLL loss with reduction modes and weights) and added tests.</div>
+    </a>
+
+    <a href="https://github.com/keras-team/keras/pull/22146" target="_blank" class="oss-card reveal">
+      <div class="oss-repo">
+        <svg width="12" height="12" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+        keras-team/keras
+      </div>
+      <div class="oss-pr">PR #22146</div>
+      <div class="oss-desc">Extended Keras to support bitwise_left_shift and bitwise_right_shift operations in the OpenVINO backend, ensuring correct mapping of bitwise operators during inference.</div>
+    </a>
+
+    <a href="https://github.com/microsoft/AIOpsLab/pull/126" target="_blank" class="oss-card reveal">
+      <div class="oss-repo">
+        <svg width="12" height="12" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+        microsoft/AIOpsLab
+      </div>
+      <div class="oss-pr">PR #126</div>
+      <div class="oss-desc">Resolved a bug in Helm integration by correcting parameter passing to helm.status() in Prometheus telemetry, fixing a runtime crash.</div>
+    </a>
+
+    <a href="https://github.com/openml/openml-python/pull/1679" target="_blank" class="oss-card reveal">
+      <div class="oss-repo">
+        <svg width="12" height="12" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+        openml/openml-python
+      </div>
+      <div class="oss-pr">PR #1679</div>
+      <div class="oss-desc">Refactored tests to replace live network calls with local mocks for deterministic and offline test execution; no production code changes.</div>
+    </a>
+
+    <a href="https://github.com/openvinotoolkit/openvino/pull/34343" target="_blank" class="oss-card reveal" style="grid-column: span 2;">
+      <div class="oss-repo">
+        <svg width="12" height="12" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+        openvinotoolkit/openvino
+      </div>
+      <div class="oss-pr">PR #34343</div>
+      <div class="oss-desc">Implemented translator for the quantized::relu6 operator via a clamp + requantization approach and added regression tests for the OpenVINO inference engine.</div>
+    </a>
+  </div>
+</section>
+
+<!-- ACHIEVEMENTS -->
+<section id="achievements">
+  <div class="section-header reveal">
+    <span class="section-num">06</span>
+    <h2>Achievements</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="ach-grid">
+    <div class="ach-card reveal">
+      <div class="ach-rank">3rd</div>
+      <div class="ach-title">Innovation Cohort 4, University Innovation Hub Program, BUET — Data Transmission using Laser Light</div>
+      <div class="ach-date">Aug 2025</div>
+    </div>
+    <div class="ach-card reveal">
+      <div class="ach-rank">4th</div>
+      <div class="ach-title">BRAC University AI Hackathon — Web-based Farmer AI Assistant (Agriculture Team)</div>
+      <div class="ach-date">May 2025</div>
+    </div>
+    <div class="ach-card reveal">
+      <div class="ach-rank">5th</div>
+      <div class="ach-title">Innovation Cohort 2, University Innovation Hub Program, BUET — AI-Enhanced Drone for Rescue &amp; Search</div>
+      <div class="ach-date">May 2025</div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <p class="hero-tag reveal" style="justify-content:center;">Let's build something together</p>
+  <div class="contact-big reveal">
+    Say <span>Hello.</span>
+  </div>
+  <p class="contact-sub reveal">Open to research collaborations, interesting problems, and conversations about AI/ML, evolutionary computing, or quantum.</p>
+  <div class="contact-links reveal">
+    <a href="mailto:rahuldrabit@gmail.com" class="btn btn-primary">rahuldrabit@gmail.com</a>
+    <a href="tel:+8801858017317" class="btn btn-ghost">+880 1858-017317</a>
+    <a href="https://linkedin.com/in/rahuldrabit" target="_blank" class="btn btn-ghost">LinkedIn</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2025 <span>Rahul Drabit Chowdhury</span>. Built with care.</p>
+  <p>Dhaka, Bangladesh &nbsp;·&nbsp; <span>BUET</span></p>
+</footer>
+
+<script>
+  // Scroll reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // Stagger children reveals within grids
+  document.querySelectorAll('.skills-grid, .oss-grid, .ach-grid, .research-list').forEach(grid => {
+    [...grid.querySelectorAll('.reveal')].forEach((el, i) => {
+      el.style.transitionDelay = `${i * 0.08}s`;
+    });
+  });
+</script>
+</body>
+</html>
