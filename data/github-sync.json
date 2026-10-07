@@ -1,0 +1,14 @@
+{
+  "username": "Rahuldrabit",
+  "approvedRepositories": [
+    "openvinotoolkit/openvino",
+    "keras-team/keras",
+    "microsoft/AIOpsLab",
+    "openml/openml-python",
+    "shap/shap",
+    "SREGym/SREGym"
+  ],
+  "maxContributions": 12,
+  "query": "author:Rahuldrabit is:pr",
+  "reviewRequired": true
+}

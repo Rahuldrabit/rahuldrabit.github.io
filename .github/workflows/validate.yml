@@ -1,0 +1,32 @@
+name: Validate portfolio
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+      - name: Validate JSON data
+        run: python scripts/validate_site.py
+      - name: Check JavaScript syntax
+        run: node --check js/app.js
+      - name: Check required local files
+        shell: bash
+        run: |
+          test -f index.html
+          test -f css/styles.css
+          test -f js/app.js
+          grep -q 'data-section="research"' index.html
+          grep -q 'data-section="github"' index.html
