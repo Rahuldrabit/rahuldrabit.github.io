@@ -1,0 +1,5 @@
+[
+  {"period":"Jun - Aug 2025","location":"Remote","role":"Google Summer of Code Contributor","organization":"MBDyn · Genetic Algorithm Module","description":"Designed and implemented a Genetic Algorithm module in C++ for evolutionary optimization within the MBDyn multibody dynamics framework.","tags":["C++","Evolutionary algorithms","Open source"]},
+  {"period":"Dec 2024 - Apr 2025","location":"Dhaka, Bangladesh","role":"AI Engineer Intern","organization":"Technyx","description":"Developed AI and ML pipelines for computer vision and generative AI applications, spanning data science workflows and production-ready model serving.","tags":["Python","Computer vision","Generative AI","Data science"]},
+  {"period":"Nov 2020 - Jan 2022","location":"Cox's Bazar, Bangladesh","role":"Co-founder and Trainer","organization":"Digital Computer Training Centre","description":"Co-founded and operated a digital training centre during the COVID-19 pandemic, providing free and low-cost instruction to more than 200 students.","tags":["Teaching","Community impact","Digital skills"]}
+]

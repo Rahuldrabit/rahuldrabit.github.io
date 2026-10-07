@@ -1,0 +1,5 @@
+[
+  {"name":"Research areas","items":["Computer vision","Generative AI","Evolutionary algorithms","Bioinformatics","Quantum computing"]},
+  {"name":"Frameworks and tools","items":["PyTorch","TensorFlow","FastAPI","LangGraph","CrewAI","Docker","Qiskit"]},
+  {"name":"Languages","items":["Python","C++","Rust","Java","JavaScript","SQL","MATLAB","Fortran"]}
+]

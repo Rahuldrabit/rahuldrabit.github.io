@@ -1,0 +1,40 @@
+name: Sync GitHub portfolio data
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '17 */6 * * *'
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+      - name: Refresh generated GitHub snapshot
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: python scripts/sync_github.py
+      - name: Validate generated snapshot
+        run: python scripts/validate_site.py
+      - name: Open review pull request when data changes
+        uses: peter-evans/create-pull-request@v7
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: 'chore: refresh GitHub portfolio data'
+          title: 'chore: refresh GitHub portfolio data'
+          body: |
+            This pull request was created by the scheduled portfolio sync.
+
+            It updates generated GitHub contribution metadata only. Review the changes before merging.
+          branch: automation/github-portfolio-sync
+          delete-branch: true
+          labels: automation,generated
