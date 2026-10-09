@@ -4,10 +4,10 @@ A static academic and professional portfolio for Rahul Drabit Chowdhury. The sit
 
 ## Structure
 
-- `index.html` contains the semantic page structure.
+- `index.html`, `research.html`, `publications.html`, `experience.html`, `education.html`, `opensource.html`, `projects.html`, and `contact.html` provide dedicated, accessible pages for each section.
 - `css/styles.css` contains the responsive light-default/dark theme system.
-- `js/app.js` loads local JSON records and renders repeated sections.
-- `data/*.json` contains curated content and generated GitHub metadata.
+- `js/app.js` loads local JSON records and dynamically renders section components.
+- `data/*.json` contains curated records (profile, research, publications, education, experience, skills, projects) and generated GitHub metadata.
 - `scripts/sync_github.py` refreshes approved public GitHub contributions.
 - `.github/workflows/validate.yml` checks every change.
 - `.github/workflows/sync.yml` opens a review pull request when GitHub data changes.

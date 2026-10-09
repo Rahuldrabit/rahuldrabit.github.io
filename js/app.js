@@ -87,9 +87,36 @@ function renderResearch(records = []) {
 }
 
 function renderPublications(records = []) {
-  return records.map((record) => `<a class="publication-item" href="${escapeHtml(safeUrl(record.url || '#'))}"${linkAttrs(record.url || '')}>
-    <div><div class="publication-title">${escapeHtml(record.title)}</div><div class="publication-meta">${escapeHtml(record.venue)} · ${escapeHtml(record.year)}</div></div><span class="research-status">${escapeHtml(record.type || 'Paper')}</span>
-  </a>`).join('');
+  if (!Array.isArray(records) || records.length === 0) {
+    return `<div class="empty-state">
+      <p class="empty-title">Publications forthcoming</p>
+      <p class="empty-desc">Peer-reviewed conference papers, journal articles, and referee-accepted publications are currently in preparation and under review. Once published, complete bibliographic citations, DOIs, and links will appear here.</p>
+      <div class="empty-links link-row">
+        <a href="https://scholar.google.com/citations?user=BV6XABcAAAAJ&hl=en" target="_blank" rel="noopener noreferrer">Google Scholar Profile ↗</a>
+        <a href="https://www.researchgate.net/profile/Rahul-Chowdhury-12" target="_blank" rel="noopener noreferrer">ResearchGate Profile ↗</a>
+      </div>
+    </div>`;
+  }
+  return records.map((record) => {
+    const period = record.date || record.year || '';
+    const metaParts = [record.venue, period].filter(Boolean);
+    const metaText = metaParts.map(escapeHtml).join(' · ');
+    const doiBadge = record.doi
+      ? `<span class="publication-doi">· DOI: <a href="${escapeHtml(safeUrl(`https://doi.org/${record.doi}`))}"${linkAttrs(`https://doi.org/${record.doi}`)}>${escapeHtml(record.doi)}</a></span>`
+      : '';
+    const linksList = Array.isArray(record.links) && record.links.length > 0
+      ? `<div class="publication-links link-row">${record.links.map((link) => `<a href="${escapeHtml(safeUrl(link.url || '#'))}"${linkAttrs(link.url || '')}>${escapeHtml(link.label || 'Link')} ↗</a>`).join('')}</div>`
+      : '';
+
+    return `<article class="publication-item">
+      <div class="publication-main">
+        <h3 class="publication-title"><a href="${escapeHtml(safeUrl(record.url || '#'))}"${linkAttrs(record.url || '')}>${escapeHtml(record.title)}</a></h3>
+        <div class="publication-meta">${metaText} ${doiBadge}</div>
+        ${linksList}
+      </div>
+      <span class="research-status">${escapeHtml(record.type || 'Paper')}</span>
+    </article>`;
+  }).join('');
 }
 
 function renderExperience(records = []) {
@@ -120,7 +147,11 @@ function renderGithub(data = {}) {
 async function loadData() {
   const entries = await Promise.all(Object.entries(DATA_FILES).map(async ([key, path]) => {
     try {
-      const response = await fetch(path);
+      let response = await fetch(path);
+      if (!response.ok) {
+        const altPath = path.startsWith('../') ? path.replace(/^\.\.\//, '') : ('../' + path);
+        response = await fetch(altPath);
+      }
       if (!response.ok) throw new Error(`${response.status}`);
       return [key, await response.json()];
     } catch (error) {
@@ -153,5 +184,6 @@ function render(data) {
 
 setupTheme();
 setupMenu();
-document.querySelector('#current-year').textContent = String(new Date().getFullYear());
+const yearEl = document.querySelector('#current-year');
+if (yearEl) yearEl.textContent = String(new Date().getFullYear());
 loadData().then(render).finally(setupReveal);

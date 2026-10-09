@@ -24,18 +24,20 @@
   <a class="skip-link" href="#main-content">Skip to content</a>
   <header class="site-header">
     <nav class="nav-shell" aria-label="Primary navigation">
-      <a class="brand" href="#top" aria-label="Rahul Drabit Chowdhury home"><span>R</span>DC / research</a>
+      <a class="brand" href="index.html" aria-label="Rahul Drabit Chowdhury home"><span>R</span>DC / research</a>
       <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-menu">
         <span class="menu-icon" aria-hidden="true">☰</span>
         <span class="sr-only">Open navigation</span>
       </button>
       <div class="nav-menu" id="site-menu">
-        <a href="#about">About</a>
-        <a href="#research">Research</a>
-        <a href="#work">Experience</a>
-        <a href="#contributions">Open source</a>
-        <a href="#projects">Projects</a>
-        <a href="#contact">Contact</a>
+        <a href="index.html" class="is-active" aria-current="page">About</a>
+        <a href="research.html">Research</a>
+        <a href="publications.html">Publications</a>
+        <a href="experience.html">Experience</a>
+        <a href="education.html">Education</a>
+        <a href="opensource.html">Open source</a>
+        <a href="projects.html">Projects</a>
+        <a href="contact.html">Contact</a>
         <button class="theme-toggle" type="button" aria-label="Switch to dark theme" title="Toggle theme"><span aria-hidden="true">◐</span></button>
       </div>
     </nav>
@@ -49,8 +51,8 @@
           <h1 class="reveal" id="hero-title">Ideas that make<br><em>intelligent systems</em> useful.</h1>
           <p class="hero-lede reveal">I am Rahul Drabit Chowdhury, a Master's student at BUET exploring evolutionary algorithms, computer vision, generative AI, and scientific machine learning.</p>
           <div class="hero-actions reveal">
-            <a class="button button-primary" href="mailto:rahuldrabit@gmail.com">Start a conversation <span aria-hidden="true">↗</span></a>
-            <a class="text-link" href="#research">Explore the work <span aria-hidden="true">↓</span></a>
+            <a class="button button-primary" href="contact.html">Start a conversation <span aria-hidden="true">↗</span></a>
+            <a class="text-link" href="research.html">Explore research <span aria-hidden="true">→</span></a>
           </div>
           <div class="hero-meta reveal"><span>Based in Dhaka, Bangladesh</span><span>Available for research collaborations</span></div>
         </div>
@@ -61,7 +63,7 @@
           <div class="portrait-note"><span class="status-dot"></span><span>Currently researching<br><strong>evolutionary intelligence</strong></span></div>
         </div>
       </div>
-      <div class="hero-ruler" aria-hidden="true"><span>01</span><span>Selected work, research & contribution</span><span>Scroll to explore ↓</span></div>
+      <div class="hero-ruler" aria-hidden="true"><span>01</span><span>Selected work, research & contribution</span><span>Explore pages above ↑</span></div>
     </section>
 
     <section class="intro-band" id="about" aria-labelledby="about-title">
@@ -73,40 +75,136 @@
             <p>I work at the intersection of theory and implementation: turning ideas from optimization, deep learning, and multi-agent systems into tools that can answer real scientific and engineering questions.</p>
             <p>My path runs from mathematics to applied AI. Along the way I have contributed to OpenVINO, Keras, AIOpsLab, and other open-source communities, while building research projects in bioinformatics, medical imaging, and federated learning.</p>
           </div>
-          <div class="link-row"><a href="https://github.com/rahuldrabit" target="_blank" rel="noopener noreferrer">GitHub ↗</a><a href="https://linkedin.com/in/rahuldrabit" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a><a href="https://huggingface.co/rahuldrabit" target="_blank" rel="noopener noreferrer">Hugging Face ↗</a><a href="https://kaggle.com/rahuldrabit" target="_blank" rel="noopener noreferrer">Kaggle ↗</a></div>
+          <div class="link-row">
+            <a href="https://scholar.google.com/citations?user=BV6XABcAAAAJ&hl=en" target="_blank" rel="noopener noreferrer">Google Scholar ↗</a>
+            <a href="https://www.researchgate.net/profile/Rahul-Chowdhury-12" target="_blank" rel="noopener noreferrer">ResearchGate ↗</a>
+            <a href="https://github.com/rahuldrabit" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
+            <a href="https://linkedin.com/in/rahuldrabit" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a>
+            <a href="https://huggingface.co/rahuldrabit" target="_blank" rel="noopener noreferrer">Hugging Face ↗</a>
+            <a href="https://kaggle.com/rahuldrabit" target="_blank" rel="noopener noreferrer">Kaggle ↗</a>
+          </div>
         </div>
       </div>
     </section>
 
     <section class="section-wrap metrics-section" aria-label="Portfolio metrics">
-          <div class="metric"><strong id="metric-prs">6+</strong><span>merged OSS PRs</span></div>
+      <div class="metric"><strong id="metric-prs">6+</strong><span>merged OSS PRs</span></div>
       <div class="metric"><strong id="metric-projects">7+</strong><span>research projects</span></div>
       <div class="metric"><strong>200+</strong><span>students trained</span></div>
       <div class="metric metric-note"><span>Open science is<br>part of the practice.</span></div>
     </section>
 
-    <section class="section-wrap content-section" id="research" aria-labelledby="research-title">
-      <div class="section-heading reveal"><div class="section-label"><span>02</span><span>Research</span></div><div><p class="eyebrow">Questions in progress</p><h2 id="research-title">Where curiosity<br><em>gets tested.</em></h2></div></div>
-      <div class="research-layout"><div class="research-intro"><p>Current work spans intelligent optimization, biological sequence analysis, graph reasoning, and autonomous systems. Each project is a way to test an idea against data, constraints, and the messy details of implementation.</p><a class="text-link" href="mailto:rahuldrabit@gmail.com">Discuss a research idea ↗</a></div><div class="research-list" data-section="research"><p class="loading-state">Loading research records...</p></div></div>
-      <article class="research-spotlight reveal"><div class="spotlight-copy"><p class="eyebrow">Featured system · GraphRCA</p><h3>Root-cause analysis for autonomous SRE.</h3><p>GraphRCA externalizes memory and planning for small language models: traces become a service graph, deterministic signals narrow the search, and a guarded agent proposes mitigation with rollback protection.</p><div class="link-row"><a href="https://github.com/Rahuldrabit/GraphRCA" target="_blank" rel="noopener noreferrer">Source ↗</a><a href="https://openreview.net/revisions?id=sTkyhw9th6" target="_blank" rel="noopener noreferrer">OpenReview ↗</a></div></div><div class="spotlight-signals"><div><strong>92.3%</strong><span>Detection success<br>on 26 tasks</span></div><div><strong>67</strong><span>Live Kubernetes<br>incidents evaluated</span></div><div><strong>4-agent</strong><span>Observer · diagnoser<br>analyst · actuator</span></div></div></article>
-      <div class="publication-block"><div class="section-label"><span>02a</span><span>Publication</span></div><div class="publication-list" data-section="publications"><p class="loading-state">Loading publications...</p></div></div>
+    <section class="section-wrap content-section" id="featured-overview" aria-labelledby="highlights-title">
+      <div class="section-heading reveal">
+        <div class="section-label"><span>02</span><span>Directory</span></div>
+        <div>
+          <p class="eyebrow">Explore by domain</p>
+          <h2 id="highlights-title">Dedicated sections<br><em>of work.</em></h2>
+        </div>
+      </div>
+
+      <div class="directory-grid">
+        <a class="contribution-card" href="research.html">
+          <span class="card-kicker">Section 01 · Scientific Inquiries</span>
+          <h3>Research & Systems</h3>
+          <p>Multi-agent autonomous SRE (GraphRCA), PINN optimization, DNA binding protein prediction, and temporal knowledge graphs.</p>
+          <div class="card-footer">
+            <span>Explore</span>
+            <strong>View Research →</strong>
+          </div>
+        </a>
+
+        <a class="contribution-card" href="publications.html">
+          <span class="card-kicker">Section 02 · Scholarly Records</span>
+          <h3>Publications</h3>
+          <p>Peer-reviewed conference proceedings, journal manuscripts, preprints, and Google Scholar citations.</p>
+          <div class="card-footer">
+            <span>Archive</span>
+            <strong>View Publications →</strong>
+          </div>
+        </a>
+
+        <a class="contribution-card" href="projects.html">
+          <span class="card-kicker">Section 03 · Deployed Software</span>
+          <h3>Projects & Frameworks</h3>
+          <p>Live mobile products (GRE AI Vocab), platforms (TipurAI), and C++/TypeScript libraries (OpenEyeGaze, Genetic Algorithm).</p>
+          <div class="card-footer">
+            <span>Production</span>
+            <strong>View Projects →</strong>
+          </div>
+        </a>
+
+        <a class="contribution-card" href="opensource.html">
+          <span class="card-kicker">Section 04 · Public Code</span>
+          <h3>Open Source</h3>
+          <p>Merged contributions and reviewed pull requests across Intel OpenVINO, Keras, and AIOpsLab ecosystems.</p>
+          <div class="card-footer">
+            <span>Synchronized</span>
+            <strong>View Open Source →</strong>
+          </div>
+        </a>
+
+        <a class="contribution-card" href="experience.html">
+          <span class="card-kicker">Section 05 · Roles & Practice</span>
+          <h3>Experience</h3>
+          <p>Professional engineering roles, teaching practice, and research engineering across applied domains.</p>
+          <div class="card-footer">
+            <span>Career</span>
+            <strong>View Experience →</strong>
+          </div>
+        </a>
+
+        <a class="contribution-card" href="education.html">
+          <span class="card-kicker">Section 06 · Academic Training</span>
+          <h3>Education & Skills</h3>
+          <p>M.Sc. in CSE & PG.Dip in ICT from BUET, B.Sc. in Mathematics from MBSTU, and core research competencies.</p>
+          <div class="card-footer">
+            <span>Academic</span>
+            <strong>View Education →</strong>
+          </div>
+        </a>
+      </div>
     </section>
 
-    <section class="soft-band" id="work" aria-labelledby="work-title"><div class="section-wrap content-section"><div class="section-heading reveal"><div class="section-label"><span>03</span><span>Experience</span></div><div><p class="eyebrow">A record of practice</p><h2 id="work-title">Learning by<br><em>shipping.</em></h2></div></div><div class="timeline" data-section="experience"><p class="loading-state">Loading experience records...</p></div></div></section>
+    <section class="soft-band" id="education-summary" aria-labelledby="edu-summary-title">
+      <div class="section-wrap content-section compact-section">
+        <div class="section-heading reveal">
+          <div class="section-label"><span>03</span><span>Education</span></div>
+          <div>
+            <p class="eyebrow">Academic background</p>
+            <h2 id="edu-summary-title">Grounded in<br><em>first principles.</em></h2>
+          </div>
+        </div>
+        <div class="education-layout">
+          <div class="education-list" data-section="education">
+            <p class="loading-state">Loading education...</p>
+          </div>
+          <div class="skills-list" data-section="skills">
+            <p class="loading-state">Loading skills...</p>
+          </div>
+        </div>
+      </div>
+    </section>
 
-    <section class="section-wrap content-section" id="contributions" aria-labelledby="contributions-title"><div class="section-heading reveal"><div class="section-label"><span>04</span><span>Open source</span></div><div><p class="eyebrow">Public work, reviewed in public</p><h2 id="contributions-title">Contributions<br><em>that travel.</em></h2></div></div><div class="contribution-header"><p>Selected contributions are synchronized from GitHub and reviewed before they appear here.</p><span id="github-updated">Last sync: curated snapshot</span></div><div class="contribution-grid" data-section="github"><p class="loading-state">Loading contributions...</p></div></section>
-
-    <section class="soft-band" id="projects" aria-labelledby="projects-title"><div class="section-wrap content-section"><div class="section-heading reveal"><div class="section-label"><span>05</span><span>Live products</span></div><div><p class="eyebrow">Built for real users</p><h2 id="projects-title">Work that made<br><em>it into the world.</em></h2></div></div><div class="work-intro"><p>Products and production-facing systems where ideas had to become useful, understandable, and resilient enough for people to use.</p><a class="text-link" href="#framework">See the engineering framework ↓</a></div><div class="project-grid" data-section="products"><p class="loading-state">Loading products...</p></div></div></section>
-
-    <section class="section-wrap content-section" id="framework" aria-labelledby="framework-title"><div class="section-heading reveal"><div class="section-label"><span>05a</span><span>Framework</span></div><div><p class="eyebrow">Reusable engineering</p><h2 id="framework-title">Tools that turn<br><em>methods into systems.</em></h2></div></div><div class="project-grid" data-section="framework"><p class="loading-state">Loading framework...</p></div></section>
-
-    <section class="soft-band" id="research-work" aria-labelledby="research-work-title"><div class="section-wrap content-section"><div class="section-heading reveal"><div class="section-label"><span>05b</span><span>Research systems</span></div><div><p class="eyebrow">Experiments, papers, and reports</p><h2 id="research-work-title">Questions made<br><em>concrete.</em></h2></div></div><div class="project-grid" data-section="research-projects"><p class="loading-state">Loading research systems...</p></div></div></section>
-
-    <section class="section-wrap content-section compact-section" id="education" aria-labelledby="education-title"><div class="section-heading reveal"><div class="section-label"><span>06</span><span>Education & skills</span></div><div><p class="eyebrow">Foundations and tools</p><h2 id="education-title">Grounded in<br><em>first principles.</em></h2></div></div><div class="education-layout"><div class="education-list" data-section="education"><p class="loading-state">Loading education...</p></div><div class="skills-list" data-section="skills"><p class="loading-state">Loading skills...</p></div></div></section>
-
-    <section class="contact-band" id="contact" aria-labelledby="contact-title"><div class="section-wrap contact-content"><p class="eyebrow">Have a question worth pursuing?</p><h2 id="contact-title">Let's make<br><em>something useful.</em></h2><div class="contact-actions"><a class="button button-primary" href="mailto:rahuldrabit@gmail.com">rahuldrabit@gmail.com ↗</a><a class="button button-quiet" href="https://linkedin.com/in/rahuldrabit" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a></div></div></section>
+    <section class="contact-band" id="contact" aria-labelledby="contact-title">
+      <div class="section-wrap contact-content">
+        <p class="eyebrow">Have a question worth pursuing?</p>
+        <h2 id="contact-title">Let's make<br><em>something useful.</em></h2>
+        <div class="contact-actions">
+          <a class="button button-primary" href="contact.html">Get in touch ↗</a>
+          <a class="button button-quiet" href="https://scholar.google.com/citations?user=BV6XABcAAAAJ&hl=en" target="_blank" rel="noopener noreferrer">Google Scholar ↗</a>
+          <a class="button button-quiet" href="https://www.researchgate.net/profile/Rahul-Chowdhury-12" target="_blank" rel="noopener noreferrer">ResearchGate ↗</a>
+          <a class="button button-quiet" href="https://linkedin.com/in/rahuldrabit" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a>
+        </div>
+      </div>
+    </section>
   </main>
 
-  <footer class="site-footer"><div class="section-wrap footer-inner"><span>© <span id="current-year">2026</span> Rahul Drabit Chowdhury</span><span>Dhaka · BUET · Built with open source</span></div></footer>
+  <footer class="site-footer">
+    <div class="section-wrap footer-inner">
+      <span>© <span id="current-year">2026</span> Rahul Drabit Chowdhury</span>
+      <span>Dhaka · BUET · Built with open source</span>
+    </div>
+  </footer>
 </body>
 </html>
