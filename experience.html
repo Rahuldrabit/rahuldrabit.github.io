@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Experience, education, and technical skills of Rahul Drabit Chowdhury.">
+  <title>Experience & Skills | Rahul Drabit Chowdhury</title>
+  <script>
+    (() => {
+      const savedTheme = localStorage.getItem('theme');
+      const theme = savedTheme === 'dark' || savedTheme === 'light'
+        ? savedTheme
+        : 'light';
+      document.documentElement.dataset.theme = theme;
+    })();
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600;6..72,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <script type="module" src="js/app.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="site-header">
+    <nav class="nav-shell" aria-label="Primary navigation">
+      <a class="brand" href="index.html" aria-label="Rahul Drabit Chowdhury home"><span>R</span>DC / research</a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-menu">
+        <span class="menu-icon" aria-hidden="true">☰</span>
+        <span class="sr-only">Open navigation</span>
+      </button>
+      <div class="nav-menu" id="site-menu">
+        <a href="index.html">About</a>
+        <a href="research.html">Research</a>
+        <a href="publications.html">Publications</a>
+        <a href="experience.html" class="is-active" aria-current="page">Experience</a>
+        <a href="education.html">Education</a>
+        <a href="opensource.html">Open source</a>
+        <a href="projects.html">Projects</a>
+        <a href="contact.html">Contact</a>
+        <button class="theme-toggle" type="button" aria-label="Switch to dark theme" title="Toggle theme"><span aria-hidden="true">◐</span></button>
+      </div>
+    </nav>
+  </header>
+
+  <main id="main-content">
+    <section class="section-wrap hero-compact" id="top" aria-labelledby="exp-title">
+      <p class="eyebrow reveal">Career trajectory · Technical practice</p>
+      <h1 class="reveal" id="exp-title">Learning by<br><em>shipping.</em></h1>
+      <p class="hero-lede reveal">A record of applied machine learning, engineering leadership, and teaching practice. Blending theoretical foundations in mathematics with systems engineering.</p>
+      <div class="link-row reveal">
+        <a href="https://linkedin.com/in/rahuldrabit" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a>
+        <a href="https://github.com/rahuldrabit" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
+        <a href="contact.html">Get in Touch →</a>
+      </div>
+    </section>
+
+    <section class="section-wrap content-section" id="work" aria-labelledby="work-title">
+      <div class="section-heading reveal">
+        <div class="section-label"><span>01</span><span>Experience</span></div>
+        <div>
+          <p class="eyebrow">Professional roles</p>
+          <h2 id="work-title">Where practice<br><em>happens.</em></h2>
+        </div>
+      </div>
+      <div class="timeline" data-section="experience">
+        <p class="loading-state">Loading experience records...</p>
+      </div>
+    </section>
+
+    <section class="soft-band" id="education-skills" aria-labelledby="edu-title">
+      <div class="section-wrap content-section" style="padding-block: 4rem;">
+        <div class="section-heading reveal">
+          <div class="section-label"><span>02</span><span>Foundation</span></div>
+          <div>
+            <p class="eyebrow">Academic training & toolset</p>
+            <h2 id="edu-title">Grounded in<br><em>first principles.</em></h2>
+          </div>
+        </div>
+        <div class="education-layout">
+          <div class="education-list" data-section="education">
+            <p class="loading-state">Loading education records...</p>
+          </div>
+          <div class="skills-list" data-section="skills">
+            <p class="loading-state">Loading skills...</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="contact-band" id="contact" aria-labelledby="contact-title">
+      <div class="section-wrap contact-content">
+        <p class="eyebrow">Looking for engineering or research leadership?</p>
+        <h2 id="contact-title">Let's build<br><em>something reliable.</em></h2>
+        <div class="contact-actions">
+          <a class="button button-primary" href="mailto:rahuldrabit@gmail.com">rahuldrabit@gmail.com ↗</a>
+          <a class="button button-quiet" href="https://linkedin.com/in/rahuldrabit" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="section-wrap footer-inner">
+      <span>© <span id="current-year">2026</span> Rahul Drabit Chowdhury</span>
+      <span>Dhaka · BUET · Built with open source</span>
+    </div>
+  </footer>
+</body>
+</html>

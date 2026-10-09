@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Research projects, autonomous SRE systems, bioinformatics, and optimization by Rahul Drabit Chowdhury.">
+  <title>Research | Rahul Drabit Chowdhury</title>
+  <script>
+    (() => {
+      const savedTheme = localStorage.getItem('theme');
+      const theme = savedTheme === 'dark' || savedTheme === 'light'
+        ? savedTheme
+        : 'light';
+      document.documentElement.dataset.theme = theme;
+    })();
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600;6..72,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <script type="module" src="js/app.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="site-header">
+    <nav class="nav-shell" aria-label="Primary navigation">
+      <a class="brand" href="index.html" aria-label="Rahul Drabit Chowdhury home"><span>R</span>DC / research</a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-menu">
+        <span class="menu-icon" aria-hidden="true">☰</span>
+        <span class="sr-only">Open navigation</span>
+      </button>
+      <div class="nav-menu" id="site-menu">
+        <a href="index.html">About</a>
+        <a href="research.html" class="is-active" aria-current="page">Research</a>
+        <a href="publications.html">Publications</a>
+        <a href="experience.html">Experience</a>
+        <a href="education.html">Education</a>
+        <a href="opensource.html">Open source</a>
+        <a href="projects.html">Projects</a>
+        <a href="contact.html">Contact</a>
+        <button class="theme-toggle" type="button" aria-label="Switch to dark theme" title="Toggle theme"><span aria-hidden="true">◐</span></button>
+      </div>
+    </nav>
+  </header>
+
+  <main id="main-content">
+    <section class="section-wrap hero-compact" id="top" aria-labelledby="research-hero-title">
+      <p class="eyebrow reveal">Scientific investigation · machine learning</p>
+      <h1 class="reveal" id="research-hero-title">Where curiosity<br><em>gets tested.</em></h1>
+      <p class="hero-lede reveal">Current work spans intelligent optimization, biological sequence analysis, graph reasoning, and autonomous multi-agent systems. Each inquiry tests theoretical hypotheses against empirical data and production constraints.</p>
+      <div class="link-row reveal">
+        <a href="https://scholar.google.com/citations?user=BV6XABcAAAAJ&hl=en" target="_blank" rel="noopener noreferrer">Google Scholar ↗</a>
+        <a href="https://www.researchgate.net/profile/Rahul-Chowdhury-12" target="_blank" rel="noopener noreferrer">ResearchGate ↗</a>
+        <a href="publications.html">Peer-Reviewed Publications →</a>
+        <a href="contact.html">Discuss a Research Idea →</a>
+      </div>
+    </section>
+
+    <section class="section-wrap content-section" id="ongoing" aria-labelledby="ongoing-title">
+      <div class="section-heading reveal">
+        <div class="section-label"><span>01</span><span>Inquiries</span></div>
+        <div>
+          <p class="eyebrow">Questions in progress</p>
+          <h2 id="ongoing-title">Active research<br><em>streams.</em></h2>
+        </div>
+      </div>
+      <div class="research-layout">
+        <div class="research-intro">
+          <p>Investigating problems where optimization and deep architectures meet real-world noise. Click on any research stream to inspect technical reports, benchmark datasets, or presentation slide decks.</p>
+          <a class="text-link" href="contact.html">Propose a collaboration ↗</a>
+        </div>
+        <div class="research-list" data-section="research">
+          <p class="loading-state">Loading research records...</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-wrap content-section" id="featured-system" aria-labelledby="spotlight-title">
+      <div class="section-heading reveal">
+        <div class="section-label"><span>02</span><span>Featured</span></div>
+        <div>
+          <p class="eyebrow">Autonomous SRE Architecture</p>
+          <h2 id="spotlight-title">System spotlight:<br><em>GraphRCA.</em></h2>
+        </div>
+      </div>
+      <article class="research-spotlight reveal">
+        <div class="spotlight-copy">
+          <p class="eyebrow">Featured system · GraphRCA</p>
+          <h3>Root-cause analysis for autonomous SRE.</h3>
+          <p>GraphRCA externalizes memory and planning for small language models: traces become a service graph, deterministic signals narrow the search, and a guarded agent proposes mitigation with rollback protection.</p>
+          <div class="link-row">
+            <a href="https://github.com/Rahuldrabit/GraphRCA" target="_blank" rel="noopener noreferrer">Source ↗</a>
+            <a href="https://doi.org/10.13140/RG.2.2.28400.01281" target="_blank" rel="noopener noreferrer">DOI: 10.13140/RG.2.2.28400.01281 ↗</a>
+            <a href="https://www.researchgate.net/publication/415467391_Scaling_Small_Language_Models_for_Autonomous_Site_Reliability_Engineering_Through_Externalized_Memory_and_Planning" target="_blank" rel="noopener noreferrer">ResearchGate ↗</a>
+            <a href="https://openreview.net/revisions?id=sTkyhw9th6" target="_blank" rel="noopener noreferrer">OpenReview ↗</a>
+            <a href="Report/Report_GraphRCA.pdf" target="_blank" rel="noopener noreferrer">Report PDF ↗</a>
+          </div>
+        </div>
+        <div class="spotlight-signals">
+          <div><strong>92.3%</strong><span>Detection success<br>on 26 tasks</span></div>
+          <div><strong>67</strong><span>Live Kubernetes<br>incidents evaluated</span></div>
+          <div><strong>4-agent</strong><span>Observer · diagnoser<br>analyst · actuator</span></div>
+        </div>
+      </article>
+    </section>
+
+    <section class="soft-band" id="survey-reports" aria-labelledby="surveys-title">
+      <div class="section-wrap content-section compact-section">
+        <div class="section-heading reveal">
+          <div class="section-label"><span>03</span><span>Reports</span></div>
+          <div>
+            <p class="eyebrow">Monographs & Technical Surveys</p>
+            <h2 id="surveys-title">Theoretical & empirical<br><em>documents.</em></h2>
+          </div>
+        </div>
+        <div class="intro-columns">
+          <div>
+            <h3 style="font-family: var(--serif); font-size: 1.5rem; margin: 0 0 .5rem;">Maximum Edge-Colorable Subgraph</h3>
+            <p>Comprehensive survey on fixed-parameter tractability, kernelization, and graph coloring optimization.</p>
+            <div class="link-row" style="margin-top: .75rem;">
+              <a href="https://doi.org/10.13140/RG.2.2.15292.81288" target="_blank" rel="noopener noreferrer">DOI: 10.13140/RG.2.2.15292.81288 ↗</a>
+              <a href="Report/Survey_of_the_Maximum_Edge_Colorable_Subgraph_Problem.pdf" target="_blank" rel="noopener noreferrer">Survey PDF ↗</a>
+            </div>
+          </div>
+          <div>
+            <h3 style="font-family: var(--serif); font-size: 1.5rem; margin: 0 0 .5rem;">Fusion-Based U-Net Segmentation</h3>
+            <p>Ensemble architectures combining graph attention and atrous spatial pyramids for biomedical image analysis.</p>
+            <div class="link-row" style="margin-top: .75rem;">
+              <a href="Report/Deep_Learning_Report_2026.pdf" target="_blank" rel="noopener noreferrer">Technical Report PDF ↗</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="contact-band" id="contact" aria-labelledby="contact-title">
+      <div class="section-wrap contact-content">
+        <p class="eyebrow">Have a research proposal or question?</p>
+        <h2 id="contact-title">Let's explore a<br><em>collaboration.</em></h2>
+        <div class="contact-actions">
+          <a class="button button-primary" href="mailto:rahuldrabit@gmail.com">rahuldrabit@gmail.com ↗</a>
+          <a class="button button-quiet" href="https://scholar.google.com/citations?user=BV6XABcAAAAJ&hl=en" target="_blank" rel="noopener noreferrer">Google Scholar ↗</a>
+          <a class="button button-quiet" href="https://www.researchgate.net/profile/Rahul-Chowdhury-12" target="_blank" rel="noopener noreferrer">ResearchGate ↗</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="section-wrap footer-inner">
+      <span>© <span id="current-year">2026</span> Rahul Drabit Chowdhury</span>
+      <span>Dhaka · BUET · Built with open source</span>
+    </div>
+  </footer>
+</body>
+</html>

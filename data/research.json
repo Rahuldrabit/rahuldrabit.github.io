@@ -1,6 +1,6 @@
 [
   {"title":"DNA Binding Protein Prediction","area":"Bioinformatics · ML and DL benchmarking","status":"Ongoing","url":"https://github.com/Rahuldrabit/StackDpp-vs-TransBind"},
-  {"title":"Knowledge Graph Reasoning for Time-Related Data","area":"Graph neural networks · temporal reasoning","status":"Ongoing"},
+  {"title":"Knowledge Graph Reasoning for Time-Related Data","area":"Graph neural networks · temporal reasoning","status":"Ongoing","url":"https://rahuldrabit.github.io/PaperPresentation/NN-ProjectProposal.pdf"},
   {"title":"Fuzzy-Based Genetic Algorithm Optimization for PINNs","area":"Evolutionary optimization · scientific machine learning","status":"Ongoing"},
   {"title":"Fusion-Based U-Net for Medical Image Segmentation","area":"Computer vision · biomedical imaging","status":"Ongoing","url":"https://rahuldrabit.github.io/Report/Deep_Learning_Report_2026.pdf"},
   {"title":"Autonomous Site Reliability Engineering with LLM Agents","area":"Reinforcement learning · multi-agent systems","status":"Ongoing","url":"https://rahuldrabit.github.io/Report/Report_GraphRCA.pdf"},

@@ -26,7 +26,14 @@ jobs:
         shell: bash
         run: |
           test -f index.html
+          test -f research.html
+          test -f publications.html
+          test -f experience.html
+          test -f education.html
+          test -f opensource.html
+          test -f projects.html
+          test -f contact.html
           test -f css/styles.css
           test -f js/app.js
-          grep -q 'data-section="research"' index.html
-          grep -q 'data-section="github"' index.html
+          grep -q 'data-section="research"' research.html
+          grep -q 'data-section="github"' opensource.html
