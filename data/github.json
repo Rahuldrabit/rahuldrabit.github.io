@@ -1,13 +1,108 @@
 {
-  "generatedAt": "2026-10-07T00:00:00Z",
-  "metrics": {"mergedPrs": 6},
+  "generatedAt": "2026-10-10T12:41:03Z",
+  "metrics": {
+    "mergedPrs": 0
+  },
   "contributions": [
-    {"repository":"openvinotoolkit/openvino","number":32554,"title":"Implemented translator for PyTorch cross_entropy_loss","summary":"Added a PyTorch frontend translator with reduction modes, weights, and regression tests.","status":"Merged","mergedAt":"2025-05","url":"https://github.com/openvinotoolkit/openvino/pull/32554"},
-    {"repository":"keras-team/keras","number":22146,"title":"Extended Keras bitwise operations in OpenVINO","summary":"Added backend support for bitwise shift operations with correct inference mapping.","status":"Merged","mergedAt":"2025-04","url":"https://github.com/keras-team/keras/pull/22146"},
-    {"repository":"microsoft/AIOpsLab","number":126,"title":"Fixed Helm integration parameter passing","summary":"Resolved a runtime crash in Prometheus telemetry integration.","status":"Merged","mergedAt":"2025-03","url":"https://github.com/microsoft/AIOpsLab/pull/126"},
-    {"repository":"openml/openml-python","number":1679,"title":"Replaced live network tests with local mocks","summary":"Made tests deterministic and suitable for offline execution.","status":"Merged","mergedAt":"2025-02","url":"https://github.com/openml/openml-python/pull/1679"},
-    {"repository":"openvinotoolkit/openvino","number":34343,"title":"Implemented quantized relu6 translator","summary":"Added clamp and requantization support with regression tests.","status":"Merged","mergedAt":"2025-09","url":"https://github.com/openvinotoolkit/openvino/pull/34343"},
-    {"repository":"SREGym/SREGym","number":1055,"title":"Made checklist JSON parsing robust to trailing model text","summary":"Used complete-array decoding with regression tests so valid diagnosis checklists are not rejected when models add prose.","status":"Merged","mergedAt":"2026-10","url":"https://github.com/SREGym/SREGym/pull/1055"},
-    {"repository":"SREGym/SREGym","number":1050,"title":"Added an agentic retry metastable overload problem","summary":"Introduced a benchmark for multi-layer retry amplification in agentic workflows with diagnosis and mitigation oracles; revisions are in progress.","status":"Open - requested changes","updatedAt":"2026-10","url":"https://github.com/SREGym/SREGym/pull/1050"}
+    {
+      "repository": "SREGym/SREGym",
+      "number": 1055,
+      "title": "fix: parse checklist JSON with trailing model text",
+      "summary": "## Problem\r",
+      "status": "Closed",
+      "mergedAt": "",
+      "updatedAt": "2026-10",
+      "url": "https://github.com/SREGym/SREGym/pull/1055"
+    },
+    {
+      "repository": "SREGym/SREGym",
+      "number": 1050,
+      "title": "feat: add agent_retry_metastable_overload problem (Metastable Failure / Agentic Workflows)",
+      "summary": "Adds `agent_retry_metastable_overload`, a new SREGym problem that simulates a **metastable overload** triggered by uncoordinated multi-layer retries in an agentic workflow.\r",
+      "status": "Open",
+      "mergedAt": "",
+      "updatedAt": "2026-10",
+      "url": "https://github.com/SREGym/SREGym/pull/1050"
+    },
+    {
+      "repository": "shap/shap",
+      "number": 4523,
+      "title": "PLOTS: overhaul embedding and group_difference",
+      "summary": "Fixes #3796\r",
+      "status": "Open",
+      "mergedAt": "",
+      "updatedAt": "2026-09",
+      "url": "https://github.com/shap/shap/pull/4523"
+    },
+    {
+      "repository": "openvinotoolkit/openvino",
+      "number": 34343,
+      "title": "Frontend(Pytorch): add support for quantized::relu6",
+      "summary": "\r",
+      "status": "Closed",
+      "mergedAt": "",
+      "updatedAt": "2026-07",
+      "url": "https://github.com/openvinotoolkit/openvino/pull/34343"
+    },
+    {
+      "repository": "shap/shap",
+      "number": 4440,
+      "title": "MAINT: use default matplotlib style for plot tests",
+      "summary": "Set pytest-mpl style to 'default' and regenerate baseline images. Refs #3954.\r",
+      "status": "Closed",
+      "mergedAt": "",
+      "updatedAt": "2026-06",
+      "url": "https://github.com/shap/shap/pull/4440"
+    },
+    {
+      "repository": "microsoft/AIOpsLab",
+      "number": 159,
+      "title": "fix: handle None return from get_container_runtime()",
+      "summary": "## Description",
+      "status": "Closed",
+      "mergedAt": "",
+      "updatedAt": "2026-06",
+      "url": "https://github.com/microsoft/AIOpsLab/pull/159"
+    },
+    {
+      "repository": "openml/openml-python",
+      "number": 1679,
+      "title": "MNT: Replace live server calls with mocks in tests/test_utils/test_utils.py",
+      "summary": "Reference Issue: Fixes https://github.com/openml/openml-python/issues/1649\r",
+      "status": "Open",
+      "mergedAt": "",
+      "updatedAt": "2026-03",
+      "url": "https://github.com/openml/openml-python/pull/1679"
+    },
+    {
+      "repository": "openvinotoolkit/openvino",
+      "number": 32554,
+      "title": "frontend/pytorch: add aten::cross_entropy_loss translator and tests (fixes #29691, relates #28584)",
+      "summary": "### 1. Core Implementation\r",
+      "status": "Closed",
+      "mergedAt": "",
+      "updatedAt": "2026-02",
+      "url": "https://github.com/openvinotoolkit/openvino/pull/32554"
+    },
+    {
+      "repository": "microsoft/AIOpsLab",
+      "number": 126,
+      "title": "Fix Prometheus Helm.status crash due to invalid chart_path argument",
+      "summary": "This PR fixes a runtime crash in Prometheus telemetry initialization.\r",
+      "status": "Closed",
+      "mergedAt": "",
+      "updatedAt": "2026-02",
+      "url": "https://github.com/microsoft/AIOpsLab/pull/126"
+    },
+    {
+      "repository": "keras-team/keras",
+      "number": 22146,
+      "title": "OpenVINO backend: add bitwise_left_shift and bitwise_right_shift",
+      "summary": "Implements bitwise_left_shift and bitwise_right_shift for the OpenVINO backend. \r",
+      "status": "Closed",
+      "mergedAt": "",
+      "updatedAt": "2026-02",
+      "url": "https://github.com/keras-team/keras/pull/22146"
+    }
   ]
 }
