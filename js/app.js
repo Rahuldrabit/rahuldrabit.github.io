@@ -1,5 +1,4 @@
 const DATA_FILES = {
-  profile: '../data/profile.json',
   research: '../data/research.json',
   publications: '../data/publications.json',
   experience: '../data/experience.json',
@@ -33,6 +32,7 @@ const linkAttrs = (url) => {
 function setupTheme() {
   const root = document.documentElement;
   const button = document.querySelector('.theme-toggle');
+  if (!button) return;
   const updateButton = () => {
     const dark = root.dataset.theme === 'dark';
     button.setAttribute('aria-label', dark ? 'Switch to light theme' : 'Switch to dark theme');
@@ -41,7 +41,11 @@ function setupTheme() {
   button.addEventListener('click', () => {
     const nextTheme = root.dataset.theme === 'dark' ? 'light' : 'dark';
     root.dataset.theme = nextTheme;
-    localStorage.setItem('theme', nextTheme);
+    try {
+      localStorage.setItem('theme', nextTheme);
+    } catch {
+      // The theme still works when browser storage is unavailable.
+    }
     updateButton();
   });
   updateButton();
@@ -50,16 +54,22 @@ function setupTheme() {
 function setupMenu() {
   const toggle = document.querySelector('.menu-toggle');
   const menu = document.querySelector('.nav-menu');
-  toggle.addEventListener('click', () => {
-    const open = menu.classList.toggle('is-open');
+  if (!toggle || !menu) return;
+  const setOpen = (open) => {
+    menu.classList.toggle('is-open', open);
     toggle.setAttribute('aria-expanded', String(open));
     toggle.querySelector('.menu-icon').textContent = open ? '×' : '☰';
+    toggle.querySelector('.sr-only').textContent = open ? 'Close navigation' : 'Open navigation';
+  };
+  toggle.addEventListener('click', () => setOpen(!menu.classList.contains('is-open')));
+  menu.querySelectorAll('a').forEach((link) => link.addEventListener('click', () => setOpen(false)));
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && menu.classList.contains('is-open')) {
+      setOpen(false);
+      toggle.focus();
+    }
   });
-  menu.querySelectorAll('a').forEach((link) => link.addEventListener('click', () => {
-    menu.classList.remove('is-open');
-    toggle.setAttribute('aria-expanded', 'false');
-    toggle.querySelector('.menu-icon').textContent = '☰';
-  }));
+  window.matchMedia('(max-width: 1050px)').addEventListener('change', () => setOpen(false));
 }
 
 function setupReveal() {
@@ -76,14 +86,22 @@ function setupReveal() {
       }
     });
   }, { threshold: .12 });
-  elements.forEach((element) => observer.observe(element));
+  elements.forEach((element) => {
+    element.classList.add('reveal-pending');
+    observer.observe(element);
+  });
 }
 
 function renderResearch(records = []) {
-  return records.map((record) => `<a class="research-item" href="${escapeHtml(safeUrl(record.url || '#'))}"${linkAttrs(record.url || '')}>
+  return records.map((record) => {
+    const url = record.url ? safeUrl(record.url) : '#';
+    const tag = url === '#' ? 'article' : 'a';
+    const attrs = tag === 'a' ? ` href="${escapeHtml(url)}"${linkAttrs(record.url)}` : '';
+    return `<${tag} class="research-item"${attrs}>
     <div><div class="research-title">${escapeHtml(record.title)}</div><div class="research-meta">${escapeHtml(record.area || 'Research in progress')}</div></div>
     <span class="research-status">${escapeHtml(record.status || 'Ongoing')}</span>
-  </a>`).join('');
+  </${tag}>`;
+  }).join('');
 }
 
 function renderPublications(records = []) {
@@ -135,55 +153,83 @@ function renderSkills(groups = []) {
   return groups.map((group) => `<div class="skill-group"><h3>${escapeHtml(group.name)}</h3><p>${(group.items || []).map(escapeHtml).join(' · ')}</p></div>`).join('');
 }
 
-function renderGithub(data = {}) {
-  const records = data.contributions || [];
+function updateGithubMetadata(data) {
   const updated = document.querySelector('#github-updated');
   if (updated && data.generatedAt) updated.textContent = `Last sync: ${new Date(data.generatedAt).toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' })}`;
   const prs = document.querySelector('#metric-prs');
-  if (prs && data.metrics?.mergedPrs) prs.textContent = `${data.metrics.mergedPrs}+`;
+  if (prs && Number.isInteger(data.metrics?.mergedPrs) && data.metrics.mergedPrs >= 0) prs.textContent = `${data.metrics.mergedPrs}+`;
+}
+
+function renderGithub(data = {}) {
+  const records = data.contributions || [];
   return records.map((record) => `<a class="contribution-card" href="${escapeHtml(safeUrl(record.url || '#'))}"${linkAttrs(record.url || '')}><span class="card-kicker">${escapeHtml(record.repository)} · PR #${escapeHtml(record.number)}</span><h3>${escapeHtml(record.title)}</h3><p>${escapeHtml(record.summary || 'Open-source contribution')}</p><div class="card-footer"><span>${escapeHtml(record.status || 'Reviewed')}</span><strong>${escapeHtml(record.mergedAt || record.updatedAt || '')}</strong></div></a>`).join('');
 }
 
-async function loadData() {
-  const entries = await Promise.all(Object.entries(DATA_FILES).map(async ([key, path]) => {
-    try {
-      let response = await fetch(path);
-      if (!response.ok) {
-        const altPath = path.startsWith('../') ? path.replace(/^\.\.\//, '') : ('../' + path);
-        response = await fetch(altPath);
-      }
-      if (!response.ok) throw new Error(`${response.status}`);
-      return [key, await response.json()];
-    } catch (error) {
-      console.warn(`Could not load ${key} data`, error);
-      return [key, null];
-    }
-  }));
-  return Object.fromEntries(entries);
+const SECTIONS = {
+  research: { data: 'research', render: renderResearch, label: 'Research records' },
+  publications: { data: 'publications', render: renderPublications, label: 'Publication records' },
+  experience: { data: 'experience', render: renderExperience, label: 'Experience records' },
+  products: { data: 'projects', render: (records) => renderProjects(records.filter((record) => record.category === 'live-product')), label: 'Product records' },
+  framework: { data: 'projects', render: (records) => renderProjects(records.filter((record) => record.category === 'engineering-framework')), label: 'Framework records' },
+  'research-projects': { data: 'projects', render: (records) => renderProjects(records.filter((record) => ['research-system', 'research-project'].includes(record.category))), label: 'Research records' },
+  education: { data: 'education', render: renderEducation, label: 'Education records' },
+  skills: { data: 'skills', render: renderSkills, label: 'Skill records' },
+  github: { data: 'github', render: renderGithub, label: 'GitHub contributions' }
+};
+
+function validateData(key, data) {
+  const records = key === 'github' ? data?.contributions : data;
+  if (!Array.isArray(records) || records.some((record) => !record || typeof record !== 'object' || Array.isArray(record))) {
+    throw new Error(`Invalid ${key} records`);
+  }
+  if (key === 'github' && (!Number.isInteger(data.metrics?.mergedPrs) || data.metrics.mergedPrs < 0)) {
+    throw new Error('Invalid GitHub metrics');
+  }
 }
 
-function render(data) {
-  const sections = {
-    research: data.research ? renderResearch(data.research) : '<p class="loading-state">Research records are temporarily unavailable.</p>',
-    publications: data.publications ? renderPublications(data.publications) : '<p class="loading-state">Publication records are temporarily unavailable.</p>',
-    experience: data.experience ? renderExperience(data.experience) : '<p class="loading-state">Experience records are temporarily unavailable.</p>',
-    products: data.projects ? renderProjects(data.projects.filter((record) => record.category === 'live-product')) : '<p class="loading-state">Product records are temporarily unavailable.</p>',
-    framework: data.projects ? renderProjects(data.projects.filter((record) => record.category === 'engineering-framework')) : '<p class="loading-state">Framework records are temporarily unavailable.</p>',
-    'research-projects': data.projects ? renderProjects(data.projects.filter((record) => record.category === 'research-system' || record.category === 'research-project')) : '<p class="loading-state">Research records are temporarily unavailable.</p>',
-    education: data.education ? renderEducation(data.education) : '<p class="loading-state">Education records are temporarily unavailable.</p>',
-    skills: data.skills ? renderSkills(data.skills) : '<p class="loading-state">Skill records are temporarily unavailable.</p>',
-    github: data.github ? renderGithub(data.github) : '<p class="loading-state">GitHub snapshot is temporarily unavailable.</p>'
-  };
-  Object.entries(sections).forEach(([key, html]) => {
-    const target = document.querySelector(`[data-section="${key}"]`);
-    if (target) target.innerHTML = html;
-  });
-  const projectMetric = document.querySelector('#metric-projects');
-  if (projectMetric && Array.isArray(data.research)) projectMetric.textContent = `${data.research.length}+`;
+async function loadData() {
+  const targets = [...document.querySelectorAll('[data-section]')];
+  const required = new Set(targets.map((target) => SECTIONS[target.dataset.section]?.data).filter(Boolean));
+  if (document.querySelector('#metric-prs')) required.add('github');
+  if (document.querySelector('#metric-projects')) required.add('research');
+
+  await Promise.all([...required].map(async (key) => {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 10000);
+    const affected = targets.filter((target) => SECTIONS[target.dataset.section]?.data === key);
+    try {
+      const response = await fetch(new URL(DATA_FILES[key], import.meta.url), { signal: controller.signal });
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+      const data = await response.json();
+      validateData(key, data);
+      affected.forEach((target) => {
+        const section = SECTIONS[target.dataset.section];
+        try {
+          target.innerHTML = section.render(data);
+        } catch (error) {
+          target.innerHTML = `<p class="loading-state">${section.label} are temporarily unavailable.</p>`;
+          console.warn(`Could not render ${target.dataset.section}`, error);
+        }
+      });
+      if (key === 'github') updateGithubMetadata(data);
+      if (key === 'research') {
+        const metric = document.querySelector('#metric-projects');
+        if (metric) metric.textContent = `${data.length}+`;
+      }
+    } catch (error) {
+      console.warn(`Could not load ${key} data`, error);
+      affected.forEach((target) => {
+        target.innerHTML = `<p class="loading-state">${SECTIONS[target.dataset.section].label} are temporarily unavailable.</p>`;
+      });
+    } finally {
+      clearTimeout(timeout);
+    }
+  }));
 }
 
 setupTheme();
 setupMenu();
+setupReveal();
 const yearEl = document.querySelector('#current-year');
 if (yearEl) yearEl.textContent = String(new Date().getFullYear());
-loadData().then(render).finally(setupReveal);
+loadData();
