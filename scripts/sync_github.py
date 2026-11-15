@@ -34,52 +34,83 @@ def short_date(value: str | None) -> str:
     return value[:7] if value else ""
 
 
+def search_repository(query: str, repository: str):
+    """Paginate each approved repository so unrelated PRs cannot hide its results."""
+    page = 1
+    fetched = 0
+    while True:
+        parameters = urllib.parse.urlencode(
+            {"q": f"{query} repo:{repository}", "per_page": 100, "page": page}
+        )
+        result = request_json(f"https://api.github.com/search/issues?{parameters}")
+        if result.get("incomplete_results") or result.get("total_count", 0) > 1000:
+            raise RuntimeError(f"GitHub search is incomplete for {repository}; keep the existing snapshot")
+        items = result.get("items", [])
+        yield from items
+        fetched += len(items)
+        if fetched >= result.get("total_count", fetched):
+            return
+        if not items:
+            raise RuntimeError(f"GitHub search pagination stopped early for {repository}")
+        page += 1
+
+
 def main() -> int:
     if not os.environ.get("GITHUB_TOKEN"):
         print("GITHUB_TOKEN is required", file=sys.stderr)
         return 2
 
     config = json.loads(CONFIG_PATH.read_text(encoding="utf-8"))
-    query = urllib.parse.quote(config["query"])
-    search_url = f"https://api.github.com/search/issues?q={query}&per_page=100"
-    search_result = request_json(search_url)
     approved = {repo.lower() for repo in config["approvedRepositories"]}
     contributions = []
+    seen = set()
 
-    for item in search_result.get("items", []):
-        repository = item["repository_url"].removeprefix("https://api.github.com/repos/")
-        if repository.lower() not in approved:
-            continue
-        detail = request_json(item["url"])
-        merged_at = detail.get("merged_at")
-        contributions.append(
-            {
+    for approved_repository in sorted(approved):
+        for item in search_repository(config["query"], approved_repository):
+            repository = item["repository_url"].removeprefix("https://api.github.com/repos/")
+            identity = (repository.lower(), item["number"])
+            pull_request = item.get("pull_request")
+            if repository.lower() not in approved or not pull_request or identity in seen:
+                continue
+            seen.add(identity)
+            detail = request_json(pull_request["url"])
+            merged_at = detail.get("merged_at")
+            record = {
                 "repository": repository,
                 "number": detail["number"],
                 "title": detail["title"],
-                "summary": detail.get("body", "").split("\n", 1)[0][:240],
+                "summary": (detail.get("body") or "").split("\n", 1)[0][:240],
                 "status": "Merged" if merged_at else detail["state"].title(),
                 "mergedAt": short_date(merged_at),
                 "updatedAt": short_date(detail.get("updated_at")),
                 "url": detail["html_url"],
             }
-        )
+            contributions.append((record, merged_at or detail.get("updated_at") or ""))
 
-    contributions.sort(key=lambda item: (item["status"] != "Merged", item["updatedAt"], item["repository"], item["number"]), reverse=True)
-    contributions = contributions[: config.get("maxContributions", 12)]
-    merged_prs = sum(item["status"] == "Merged" for item in contributions)
+    contributions.sort(
+        key=lambda item: (item[0]["status"] == "Merged", item[1], item[0]["repository"], item[0]["number"]),
+        reverse=True,
+    )
+    merged_prs = sum(record["status"] == "Merged" for record, _ in contributions)
+    payload = {
+        "metrics": {"mergedPrs": merged_prs},
+        "contributions": [record for record, _ in contributions[: config.get("maxContributions", 12)]],
+    }
+    current = OUTPUT_PATH.read_text(encoding="utf-8") if OUTPUT_PATH.exists() else ""
+    try:
+        previous = json.loads(current)
+    except json.JSONDecodeError:
+        previous = {}
+    if isinstance(previous, dict) and previous.get("generatedAt") and all(previous.get(key) == value for key, value in payload.items()):
+        print("GitHub snapshot is unchanged")
+        return 0
     output = {
         "generatedAt": datetime.now(timezone.utc).replace(microsecond=0).isoformat().replace("+00:00", "Z"),
-        "metrics": {"mergedPrs": merged_prs},
-        "contributions": contributions,
+        **payload,
     }
     serialized = json.dumps(output, indent=2, ensure_ascii=True) + "\n"
-    current = OUTPUT_PATH.read_text(encoding="utf-8") if OUTPUT_PATH.exists() else ""
-    if current != serialized:
-        OUTPUT_PATH.write_text(serialized, encoding="utf-8")
-        print(f"Updated {OUTPUT_PATH} with {len(contributions)} contributions")
-    else:
-        print("GitHub snapshot is unchanged")
+    OUTPUT_PATH.write_text(serialized, encoding="utf-8")
+    print(f"Updated {OUTPUT_PATH} with {len(payload['contributions'])} contributions")
     return 0
 
 

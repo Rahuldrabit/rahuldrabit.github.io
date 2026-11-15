@@ -28,6 +28,20 @@ Then open `http://localhost:8000`.
 
 Opening `index.html` directly will not load JSON data in browsers that block local module requests, so use a local server for previewing the complete page.
 
+## Validation
+
+Run the data contract checks and regression tests before publishing:
+
+```powershell
+python scripts/validate_site.py
+python -m unittest discover -s tests -v
+Get-Content -Raw js/app.js | node --input-type=module --check
+```
+
+The validation workflow runs on pushes and pull requests. It checks required datasets, record types, nested fields, JavaScript syntax, and GitHub sync regressions.
+
 ## GitHub sync
 
 The scheduled workflow uses the built-in GitHub Actions token and runs every six hours. It can also be started manually with `workflow_dispatch`. The generated data is reviewed through a pull request before it reaches the published site.
+
+The sync paginates each approved repository, counts merged pull requests before limiting the displayed cards, and preserves the existing snapshot when its content is unchanged. Incomplete searches fail without overwriting the previous snapshot.

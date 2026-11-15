@@ -7,11 +7,12 @@
   <title>Contact | Rahul Drabit Chowdhury</title>
   <script>
     (() => {
-      const savedTheme = localStorage.getItem('theme');
-      const theme = savedTheme === 'dark' || savedTheme === 'light'
-        ? savedTheme
-        : 'light';
-      document.documentElement.dataset.theme = theme;
+      try {
+        const savedTheme = localStorage.getItem('theme');
+        document.documentElement.dataset.theme = savedTheme === 'dark' ? 'dark' : 'light';
+      } catch {
+        document.documentElement.dataset.theme = 'light';
+      }
     })();
   </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -80,9 +81,9 @@
         </div>
       </div>
 
-      <div class="contact-card" style="padding: 2.5rem; border: 1px solid var(--line); background: var(--highlight); max-width: 960px;">
+      <div class="contact-card">
         <p class="eyebrow" style="margin: 0 0 .5rem;">Direct electronic mail</p>
-        <h3 style="font-family: var(--serif); font-size: clamp(1.8rem, 3.5vw, 2.5rem); margin: 0 0 1rem; font-weight: 500;">rahuldrabit@gmail.com</h3>
+        <h3>rahuldrabit@gmail.com</h3>
         <p style="color: var(--muted); margin: 0 0 1.5rem; max-width: 600px;">Based in Dhaka, Bangladesh · Affiliated with Bangladesh University of Engineering and Technology (BUET).</p>
         <div class="contact-actions">
           <a class="button button-primary" href="mailto:rahuldrabit@gmail.com">Send an Email ↗</a>

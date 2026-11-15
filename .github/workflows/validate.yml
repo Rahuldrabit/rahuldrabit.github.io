@@ -3,7 +3,6 @@ name: Validate portfolio
 on:
   pull_request:
   push:
-    branches: [main]
 
 permissions:
   contents: read
@@ -20,8 +19,10 @@ jobs:
           python-version: '3.x'
       - name: Validate JSON data
         run: python scripts/validate_site.py
+      - name: Check sync and data validation regressions
+        run: python -m unittest discover -s tests -v
       - name: Check JavaScript syntax
-        run: node --check js/app.js
+        run: node --input-type=module --check < js/app.js
       - name: Check required local files
         shell: bash
         run: |

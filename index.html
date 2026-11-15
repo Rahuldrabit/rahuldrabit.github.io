@@ -7,11 +7,12 @@
   <title>Rahul Drabit Chowdhury | AI Engineer & Researcher</title>
   <script>
     (() => {
-      const savedTheme = localStorage.getItem('theme');
-      const theme = savedTheme === 'dark' || savedTheme === 'light'
-        ? savedTheme
-        : 'light';
-      document.documentElement.dataset.theme = theme;
+      try {
+        const savedTheme = localStorage.getItem('theme');
+        document.documentElement.dataset.theme = savedTheme === 'dark' ? 'dark' : 'light';
+      } catch {
+        document.documentElement.dataset.theme = 'light';
+      }
     })();
   </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
